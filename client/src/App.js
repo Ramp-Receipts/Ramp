@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { ReceiptsList } from './ReceiptsList';
+import { Route, Switch } from 'react-router-dom';
+import ReceiptsList from './ReceiptsList';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -10,7 +10,8 @@ class App extends Component {
     return (
       <div className="app container">
         <Switch>
-          <Route path="/" component={ReceiptsList}/>
+          <Route path='/' component={ReceiptsList} />
+          <Route path='/receipt/:year/:month' component={ReceiptsList} />
         </Switch>
       </div>
     );

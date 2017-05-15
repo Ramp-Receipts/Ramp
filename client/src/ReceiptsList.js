@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import numeral from 'numeral';
 
 class ReceiptsList extends Component {
+
   state = {
     loaded: false,
     receipts: []
   };
 
   componentDidMount() {
-    console.log('Receipts list mount');
     fetch('/receipts')
       .then(res => res.json())
       .then(receipts => this.setState({
