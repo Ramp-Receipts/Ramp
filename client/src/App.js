@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import moment from 'moment';
 import numeral from 'numeral';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   state = {
