@@ -16,15 +16,28 @@ Version 1.0, built for Ramp Receipts v1 API.
 
 1. Install all the required packages for the Node.js app in the root (`./`):
 
+    ```
     yarn
+    ```
 
-2. Install all the required packages for the React app in `./client` folder:
+2. Create `.env` file in root folder and add the following lines to it:
 
+    ```
+    ACCESS_KEY=<your access key here>
+    CUSTOMER_ID=<your customer id>
+    ```
+
+3. Install all the required packages for the React app in `./client` folder:
+
+    ```
     yarn
+    ```
 
-3. Create `.env` file in `./client` folder and add the following line to it:
+4. Create `.env` file in `./client` folder and add the following line to it:
 
+    ```
     PORT=3009
+    ```
 
 ### Running the application ###
 
