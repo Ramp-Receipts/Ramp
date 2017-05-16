@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <div className="app container">
         <Switch>
-          <Route path='/' component={ReceiptsList} />
+          <Route path='/' exact component={ReceiptsList} />
           <Route path='/receipt/:year/:month' component={Receipt} />
         </Switch>
       </div>
