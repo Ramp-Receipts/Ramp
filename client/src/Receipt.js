@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { formatCurrency, formatMonth } from './formatters';
+import { getPdfLink } from './customerMapper';
 
 class Receipt extends Component {
 
   state = {
     loaded: false,
-    receipt: {charges:[]}
+    receipt: { charges: [] }
   };
 
   componentDidMount() {
     let params = this.props.match.params;
-    let year = parseInt(params.year);
-    let month = parseInt(params.month);
+    let year = parseInt(params.year, 10);
+    let month = parseInt(params.month, 10);
 
-    this.setState({ year, month });
+    let shareablePdfLink = getPdfLink(null, year, month);
+
+    this.setState({
+      year,
+      month,
+      pdfLink: shareablePdfLink
+    });
 
     fetch(`/receipts/${year}/${month}`)
       .then(res => res.json())
@@ -64,6 +71,14 @@ class Receipt extends Component {
     return (
       <div>
         <h1>Receipt for {formatMonth(this.state.year, this.state.month)}</h1>
+
+        <div className="btn-toolbar">
+          <Link to={'/'} className="btn btn-default">Home</Link>
+          <a href={this.state.pdfLink} className="btn btn-primary" target="_blank">Download PDF</a>
+        </div>
+
+        <hr />
+
         {!this.state.loaded ? loading : receipt}
       </div>
     );
