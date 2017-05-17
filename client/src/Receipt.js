@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
-import numeral from 'numeral';
+import { formatCurrency, formatMonth } from './formatters';
 
 class Receipt extends Component {
 
@@ -23,14 +22,6 @@ class Receipt extends Component {
         loaded: true,
         receipt
       }));
-  }
-
-  formatCurrency(value) {
-    return numeral(value).format('$0,0.00');
-  }
-
-  formatMonth(year, month) {
-    return moment(new Date(year, month - 1)).format('MMMM YYYY');
   }
 
   render() {
@@ -55,7 +46,7 @@ class Receipt extends Component {
                 {charge.description || '-'}
               </td>
               <td className="text-right">
-                  {this.formatCurrency(charge.totalAmount)}
+                  {formatCurrency(charge.totalAmount)}
               </td>
             </tr>)}
           </tbody>
@@ -65,14 +56,14 @@ class Receipt extends Component {
 
         <div className="text-right">
           <strong>
-            Total: {this.formatCurrency(this.state.receipt.totalAmount)}
+            Total: {formatCurrency(this.state.receipt.totalAmount)}
           </strong>
         </div>
       </div>
 
     return (
       <div>
-        <h1>Receipt for {this.formatMonth(this.state.year, this.state.month)}</h1>
+        <h1>Receipt for {formatMonth(this.state.year, this.state.month)}</h1>
         {!this.state.loaded ? loading : receipt}
       </div>
     );

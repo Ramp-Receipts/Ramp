@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
-import numeral from 'numeral';
+import { formatCurrency, formatMonth } from './formatters';
 
 class ReceiptsList extends Component {
 
@@ -17,14 +16,6 @@ class ReceiptsList extends Component {
         loaded: true,
         receipts
       }));
-  }
-
-  formatCurrency(value) {
-    return numeral(value).format('$0,0.00');
-  }
-
-  formatMonth(year, month) {
-    return moment(new Date(year, month - 1)).format('MMMM YYYY');
   }
 
   render() {
@@ -47,14 +38,14 @@ class ReceiptsList extends Component {
           <tr key={receipt.year + '/' + receipt.month}>
             <td>
               <Link to={`/receipt/${receipt.year}/${receipt.month}`}>
-                {this.formatMonth(receipt.year, receipt.month)}
+                {formatMonth(receipt.year, receipt.month)}
               </Link>
             </td>
             <td>
                 {receipt.totalCount}
             </td>
             <td>
-                {this.formatCurrency(receipt.totalAmount)}
+                {formatCurrency(receipt.totalAmount)}
             </td>
           </tr>)}
         </tbody>
