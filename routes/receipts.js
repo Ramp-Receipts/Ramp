@@ -67,7 +67,7 @@ router.post('/:year/:month', (req, res, next) => {
             line2: "App 13",
             country: "USA",
             state: "New York",
-            city: "New Yorkk",
+            city: "New York",
             zip: "11000"
           }
         }

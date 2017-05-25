@@ -10,6 +10,18 @@ class Receipt extends Component {
     receipt: { charges: [] }
   };
 
+  customer = {
+    name: "John Doe",
+    address: {
+      line1: "Elm Street 12",
+      line2: "App 13",
+      country: "USA",
+      state: "New York",
+      city: "New Yorkk",
+      zip: "11000"
+    }
+  };
+
   componentDidMount() {
     let params = this.props.match.params;
     let year = parseInt(params.year, 10);
@@ -49,17 +61,17 @@ class Receipt extends Component {
           </thead>
           <tbody>
             {this.state.receipt.charges.map((charge, index) =>
-            <tr key={index}>
-              <td>
-                {charge.description || '-'}
-              </td>
-              <td>
-                {formatDate(charge.created)}
-              </td>
-              <td className="text-right">
+              <tr key={index}>
+                <td>
+                  {charge.description || '-'}
+                </td>
+                <td>
+                  {formatDate(charge.created)}
+                </td>
+                <td className="text-right">
                   {formatCurrency(charge.amount)}
-              </td>
-            </tr>)}
+                </td>
+              </tr>)}
           </tbody>
         </table>
 
@@ -121,6 +133,19 @@ class Receipt extends Component {
 
         <hr />
 
+        <div className="row">
+          <div className="col-sm-offset-3 col-sm-2">
+            <strong>Customer:</strong>
+          </div>
+          <div className="col-sm-4">
+            {this.customer.name}<br/>
+            {this.customer.address.line1}, {this.customer.address.line2}<br/>
+            {this.customer.address.city} / {this.customer.address.zip}<br/>
+            {this.customer.address.country} ({this.customer.address.state})
+          </div>
+        </div>
+
+        <hr />
         {!this.state.loaded ? loading : receipt}
       </div>
     );
