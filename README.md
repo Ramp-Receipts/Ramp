@@ -2,6 +2,8 @@
 
 A sample [Ramp Receipts API](https://rampreceipts.com/) client built with Node.js, Express and React.
 
+Full Ramp Receipts API documentation is available here: [https://rampreceipts.com/docs](https://rampreceipts.com/docs).
+
 ### Quick summary ###
 
 The solution is made of two different applications. One is Node.js Express app in the root and the other is React app created using `create-react-app`. React app is under `/client` folder.

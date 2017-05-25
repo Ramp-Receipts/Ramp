@@ -67,6 +67,7 @@ class ReceiptsList extends Component {
     return (
       <div>
         <h1>Receipts</h1>
+        <hr />
         {!this.state.loaded ? loading : receiptsList}
       </div>
     );

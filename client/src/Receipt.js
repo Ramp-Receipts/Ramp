@@ -109,11 +109,14 @@ class Receipt extends Component {
 
     return (
       <div>
-        <h1>Receipt for {formatMonth(this.state.year, this.state.month)}</h1>
-
-        <div className="btn-toolbar">
-          <Link to={'/'} className="btn btn-default">Home</Link>
-          <a href={this.state.pdfLink} className="btn btn-primary" target="_blank">Download PDF</a>
+        <div className="row">
+          <div className="col-sm-6">
+            <h1>Receipt for {formatMonth(this.state.year, this.state.month)}</h1>
+          </div>
+          <div className="col-sm-6 app-toolbar">
+            <Link to={'/'}>&laquo; back to list</Link>
+            <a href={this.state.pdfLink} className="btn btn-primary" target="_blank">Download PDF</a>
+          </div>
         </div>
 
         <hr />
