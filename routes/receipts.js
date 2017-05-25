@@ -2,9 +2,44 @@ const express = require('express');
 const request = require('request');
 const router = express.Router();
 
-const accessKey = process.env.ACCESS_KEY;
-const customerId = process.env.CUSTOMER_ID;
 const rootUrl = 'https://rampreceipts.com/api/v1/receipt/';
+const accessKey = process.env.ACCESS_KEY;
+
+// Customer ID would be loaded from the database (current logged in customer/user)
+const customerId = process.env.CUSTOMER_ID;
+
+// Customer data would be loaded from the database
+const customerData = {
+  name: 'John Doe',
+  address: {
+    line1: 'Elm Street 12',
+    line2: 'App 13',
+    country: 'USA',
+    state: 'New York',
+    city: 'New York',
+    zip: '11000'
+  }
+};
+
+// Company data would be hardcoded or loaded from database
+const companyData = {
+  name: 'Ramp Receipts Sample Company',
+  address: {
+    line1: 'Oak Street 15',
+    line2: 'Apartment 1',
+    country: 'USA',
+    state: 'CA',
+    city: 'San Carlos',
+    zip: '24221'
+  },
+  'email': 'override_support@email.com',
+  'phone': '555-123-456',
+  'vat': '1234567890'
+};
+
+const overrideOptions = {
+  logoUrl: 'https://rampreceipts.com/images/rr-logo.png'
+};
 
 // Gets the list of monthly receipts
 router.get('/', (req, res, next) => {
@@ -60,17 +95,9 @@ router.post('/:year/:month', (req, res, next) => {
         'Content-Type': 'application/json'
       },
       json: {
-        customer: {
-          name: "John Doe",
-          address: {
-            line1: "Elm Street 12",
-            line2: "App 13",
-            country: "USA",
-            state: "New York",
-            city: "New York",
-            zip: "11000"
-          }
-        }
+        customer: customerData,
+        company: companyData,
+        options: overrideOptions
       }
     })
     .on('error', error => {
@@ -101,17 +128,9 @@ router.get('/pdf/:customer/:year/:month', (req, res, next) => {
         'Content-Type': 'application/json'
       },
       json: {
-        customer: {
-          name: "John Doe",
-          address: {
-            line1: "Elm Street 12",
-            line2: "App 13",
-            country: "USA",
-            state: "New York",
-            city: "New Yorkk",
-            zip: "11000"
-          }
-        }
+        customer: customerData,
+        company: companyData,
+        options: overrideOptions
       }
     })
     .on('error', error => {

@@ -23,7 +23,7 @@ class Receipt extends Component {
   };
 
   company = {
-    name: 'Overridden Company Name',
+    name: 'Ramp Receipts Sample Company',
     address: {
       line1: 'Oak Street 15',
       line2: 'Apartment 1',
