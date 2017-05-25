@@ -11,15 +11,30 @@ class Receipt extends Component {
   };
 
   customer = {
-    name: "John Doe",
+    name: 'John Doe',
     address: {
-      line1: "Elm Street 12",
-      line2: "App 13",
-      country: "USA",
-      state: "New York",
-      city: "New Yorkk",
-      zip: "11000"
+      line1: 'Elm Street 12',
+      line2: 'App 13',
+      country: 'USA',
+      state: 'New York',
+      city: 'New York',
+      zip: '11000'
     }
+  };
+
+  company = {
+    name: 'Overridden Company Name',
+    address: {
+      line1: 'Oak Street 15',
+      line2: 'Apartment 1',
+      country: 'USA',
+      state: 'CA',
+      city: 'San Carlos',
+      zip: '24221'
+    },
+    'email': 'override_support@email.com',
+    'phone': '555-123-456',
+    'vat': '1234567890'
   };
 
   componentDidMount() {
@@ -146,7 +161,25 @@ class Receipt extends Component {
         </div>
 
         <hr />
+
         {!this.state.loaded ? loading : receipt}
+
+        <hr />
+
+        <div className="row">
+          <div className="col-sm-6">
+            <strong>Company:</strong>
+          </div>
+          <div className="col-sm-6">
+            {this.company.name}<br/>
+            {this.company.address.line1}<br/>
+            {this.company.address.line2}<br/>
+            {this.company.address.city} {this.company.address.state}, {this.company.address.zip}<br/>
+            VAT: {this.company.vat}<br/>
+            Email: {this.company.email}<br/>
+            Phone: {this.company.phone}
+          </div>
+        </div>
       </div>
     );
   }
