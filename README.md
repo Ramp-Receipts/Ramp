@@ -49,11 +49,6 @@ Version 1.0, built for Ramp Receipts v1 API.
 
 3. Application is now accessible from [http://localhost:3009/](http://localhost:3009).
 
-### Who do I talk to? ###
-
-* Built by [Ramp Ventures](http://rampventures.com/) team
-* [Contact us](http://rampventures.com/#contactus)
-
 ### License ###
 
 This sample project is licensed under the terms of the MIT license. Ramp Receipts API has a different license.
