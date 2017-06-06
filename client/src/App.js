@@ -12,7 +12,7 @@ class App extends Component {
       <div className="app container">
         <header className="app-header">
           <a href="/">
-            <img src="/images/logo.png" className="app-logo"/>
+            <img src="/images/logo.png" alt="Ramp Receipts Client Demo" className="app-logo"/>
           </a>
         </header>
         <Switch>

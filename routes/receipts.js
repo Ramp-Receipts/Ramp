@@ -21,34 +21,16 @@ const customerData = {
   }
 };
 
-// Company data would be hardcoded or loaded from database
-const companyData = {
-  name: 'Ramp Receipts Sample Company',
-  address: {
-    line1: 'Oak Street 15',
-    line2: 'Apartment 1',
-    country: 'USA',
-    state: 'CA',
-    city: 'San Carlos',
-    zip: '24221'
-  },
-  'email': 'override_support@email.com',
-  'phone': '555-123-456',
-  'vat': '1234567890'
-};
-
-const overrideOptions = {
-  logoUrl: 'https://rampreceipts.com/images/rr-logo.png'
-};
-
-// Gets the list of monthly receipts
+// Gets the list of monthly receipts with PDF links
 router.get('/', (req, res, next) => {
-  request.get({
+  request.post({
     url: `${rootUrl}${customerId}`,
     headers: {
       'Authorization': `Token ${accessKey}`
     },
-    json: true
+    json: {
+      customer: customerData
+    }
   }, (error, response, body) => {
     if (error) {
       let errorMessage = `Error calling Ramp Receipts API: ${error}`;
@@ -82,37 +64,8 @@ router.get('/:year/:month', (req, res, next) => {
   });
 });
 
-// Download PDF
-router.post('/:year/:month', (req, res, next) => {
-  let year = req.params.year;
-  let month = req.params.month;
-
-  request
-    .post({
-      url: `${rootUrl}${customerId}/${year}/${month}`,
-      headers: {
-        'Authorization': `Token ${accessKey}`,
-        'Content-Type': 'application/json'
-      },
-      json: {
-        customer: customerData,
-        company: companyData,
-        options: overrideOptions
-      }
-    })
-    .on('error', error => {
-      console.log('Error downloading PDF: ', error);
-    })
-    .on('response', response => {
-      if (response.statusCode !== 200) {
-        console.log('Error downloading PDF: ', response.statusCode, response.statusMessage);
-      }
-    })
-    .pipe(res);;
-});
-
-// External shareable link for PDF
-router.get('/pdf/:customer/:year/:month', (req, res, next) => {
+// Get the PDF URL directly
+router.get('/pdf/:year/:month', (req, res, next) => {
   let customer = req.params.customer;
   let year = req.params.year;
   let month = req.params.month;
@@ -122,28 +75,23 @@ router.get('/pdf/:customer/:year/:month', (req, res, next) => {
 
   request
     .post({
-      url: `${rootUrl}${customerId}/${year}/${month}`,
+      url: `${rootUrl}pdf/${customerId}/${year}/${month}`,
       headers: {
         'Authorization': `Token ${accessKey}`,
         'Content-Type': 'application/json'
       },
       json: {
-        customer: customerData,
-        company: companyData,
-        options: overrideOptions
+        customer: customerData
       }
-    })
-    .on('error', error => {
-      console.log('Error downloading PDF: ', error);
-    })
-    .on('response', response => {
-      if (response.statusCode !== 200) {
-        console.log('Error downloading PDF: ', response.statusCode, response.statusMessage);
+    }, (error, response, body) => {
+      if (error) {
+        let errorMessage = `Error calling Ramp Receipts API: ${error}`;
+        console.log(errorMessage);
+        res.status(500).json({ error: errorMessage });
+      } else {
+        res.json(body);
       }
-    })
-    .pipe(res);
-  // The API response will just be piped into this router response
-  // All headers will also be piped, including Content-Disposition
+    });
 });
 
 module.exports = router;

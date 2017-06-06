@@ -19,13 +19,6 @@ class ReceiptsList extends Component {
       }));
   }
 
-  downloadPdf(year, month) {
-    fetch(`/receipts/${year}/${month}`, {
-      method: 'post'
-    }).then(res => res.blob())
-      .then(blob => download(blob, `receipt-${year}-${month}.pdf`));
-  }
-
   render() {
     let loading =
       <div className="loader">
@@ -57,8 +50,8 @@ class ReceiptsList extends Component {
                 {formatCurrency(receipt.totalAmount)}
               </td>
               <td className="text-right">
-                <button className="btn btn-default" title="Download PDF"
-                  onClick={this.downloadPdf.bind(this, receipt.year, receipt.month)}>PDF</button>
+                <a className="btn btn-default" title="Open PDF in browser" target="_blank"
+                  href={receipt.pdfUrl}>Open PDF</a>
               </td>
             </tr>)}
         </tbody>
