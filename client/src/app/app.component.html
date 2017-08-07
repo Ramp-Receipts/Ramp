@@ -1,9 +1,11 @@
-<h1>Receipts</h1>
+<h1>{{ title }}</h1>
 <hr />
 <div class="row">
   <div class="col-sm-6">
 
-    <table class="table table-hover table-striped">
+    <div *ngIf="!receipts">Loading...</div>
+
+    <table *ngIf="receipts" class="table table-hover table-striped">
       <thead>
         <tr>
           <th>Month</th>
@@ -12,45 +14,44 @@
         </tr>
       </thead>
       <tbody>
-          <tr key="">
-            <td>
-
-            </td>
-            <td class="text-right">
-
-            </td>
-            <td class="text-right">
-              <a title="Download PDF"
-                  href="" target="_blank">Download</a>
-            </td>
-          </tr>
+        <tr *ngFor="let receipt of receipts">
+          <td>
+            {{ receipt.monthName }} {{ receipt.year }}
+          </td>
+          <td class="text-right">
+            {{ receipt.amount }}
+          </td>
+          <td class="text-right">
+            <a title="Download PDF"
+                [href]="receipt.pdfUrl" target="_blank">Download</a>
+          </td>
+        </tr>
       </tbody>
     </table>
 
   </div>
   <div class="col-sm-6">
 
-    <div class="panel panel-default">
+    <div *ngIf="!customer">Loading...</div>
+
+    <div *ngIf="customer" class="panel panel-default">
       <div class="panel-heading">Company information</div>
       <div class="panel-body">
         <div class="form-group">
           <label class="control-label">Name</label>
-          <input class="form-control" value={this.state.customerEdit.name}
-                  name="name" onChange={this.handleCustomerChange} />
+          <input class="form-control" [(ngModel)]="customer.name" />
         </div>
         <div class="row">
           <div class="col-sm-6">
             <div class="form-group">
               <label class="control-label">Address line 1</label>
-              <input class="form-control" value={this.state.customerEdit.addressLine1}
-                    name="addressLine1" onChange={this.handleCustomerChange} />
+              <input class="form-control" [(ngModel)]="customer.address.line1" />
             </div>
           </div>
           <div class="col-sm-6">
             <div class="form-group">
               <label class="control-label">Address line 2</label>
-              <input class="form-control" value={this.state.customerEdit.addressLine2}
-                    name="addressLine2" onChange={this.handleCustomerChange} />
+              <input class="form-control" [(ngModel)]="customer.address.line2" />
             </div>
           </div>
         </div>
@@ -58,49 +59,43 @@
           <div class="col-sm-6">
             <div class="form-group">
               <label class="control-label">City</label>
-              <input class="form-control" value={this.state.customerEdit.addressCity}
-                      name="addressCity" onChange={this.handleCustomerChange} />
+              <input class="form-control" [(ngModel)]="customer.address.city" />
             </div>
           </div>
           <div class="col-sm-3">
             <div class="form-group">
               <label class="control-label">State</label>
-              <input class="form-control" value={this.state.customerEdit.addressState}
-                      name="addressState" onChange={this.handleCustomerChange} />
+              <input class="form-control" [(ngModel)]="customer.address.state" />
             </div>
           </div>
           <div class="col-sm-3">
             <div class="form-group">
               <label class="control-label">Zip</label>
-              <input class="form-control" value={this.state.customerEdit.addressZip}
-                      name="addressZip" onChange={this.handleCustomerChange} />
+              <input class="form-control" [(ngModel)]="customer.address.zip" />
             </div>
           </div>
         </div>
         <div class="form-group">
           <label class="control-label">Country</label>
-          <input class="form-control" value={this.state.customerEdit.addressCountry}
-                  name="addressCountry" onChange={this.handleCustomerChange} />
+          <input class="form-control" [(ngModel)]="customer.address.country" />
         </div>
         <div class="row">
           <div class="col-sm-6">
             <div class="form-group">
               <label class="control-label">VAT number</label>
-              <input class="form-control" value={this.state.customerEdit.vat}
-                    name="vat" onChange={this.handleCustomerChange} />
+              <input class="form-control" [(ngModel)]="customer.vat" />
             </div>
           </div>
           <div class="col-sm-6">
             <div class="form-group">
               <label class="control-label">Extra info</label>
-              <input class="form-control" value={this.state.customerEdit.extraInfo}
-                    name="extraInfo" onChange={this.handleCustomerChange} />
+              <input class="form-control" [(ngModel)]="customer.extraInfo" />
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-12">
-            <button class="btn btn-primary" onClick={this.handleSaveChangesClick}>Save</button>
+            <button class="btn btn-primary" (click)="saveCustomer()">Save</button>
           </div>
         </div>
       </div>
