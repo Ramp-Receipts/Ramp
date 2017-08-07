@@ -3,6 +3,8 @@ const request = require('request');
 const router = express.Router();
 
 const rootUrl = 'https://rampreceipts.com/api/v1/receipt/';
+
+// TODO: Make sure you have your access key defined as environment variable, or enter it here
 const accessKey = process.env.ACCESS_KEY;
 
 // Customer ID would be loaded from the database (current logged in customer/user)
@@ -21,25 +23,27 @@ const customerData = {
   }
 };
 
-// Gets the list of monthly receipts with PDF links
+// Gets the list of monthly receipts with links to PDFs
 router.get('/', (req, res, next) => {
-  request.post({
-    url: `${rootUrl}${customerId}`,
-    headers: {
-      'Authorization': `Token ${accessKey}`
-    },
-    json: {
-      customer: customerData
-    }
-  }, (error, response, body) => {
-    if (error) {
-      let errorMessage = `Error calling Ramp Receipts API: ${error}`;
-      console.log(errorMessage);
-      res.status(500).json({ error: errorMessage });
-    } else {
-      res.json(body);
-    }
-  });
+  request
+    .post({
+      url: `${rootUrl}${customerId}`,
+      headers: {
+        'Authorization': `Token ${accessKey}`,
+        'Content-Type': 'application/json'
+      },
+      json: {
+        customer: customerData
+      }
+    }, (error, response, body) => {
+      if (error) {
+        let errorMessage = `Error calling Ramp Receipts API: ${error}`;
+        console.log(errorMessage);
+        res.status(500).json({ error: errorMessage });
+      } else {
+        res.json(body);
+      }
+    });
 });
 
 // Get the receipt for the given month
@@ -47,35 +51,9 @@ router.get('/:year/:month', (req, res, next) => {
   let year = req.params.year;
   let month = req.params.month;
 
-  request.get({
-    url: `${rootUrl}${customerId}/${year}/${month}`,
-    headers: {
-      'Authorization': `Token ${accessKey}`
-    },
-    json: true
-  }, (error, response, body) => {
-    if (error) {
-      let errorMessage = `Error calling Ramp Receipts API: ${error}`;
-      console.log(errorMessage);
-      res.status(500).json({ error: errorMessage });
-    } else {
-      res.json(body);
-    }
-  });
-});
-
-// Get the PDF URL directly
-router.get('/pdf/:year/:month', (req, res, next) => {
-  let customer = req.params.customer;
-  let year = req.params.year;
-  let month = req.params.month;
-
-  // TODO: Here we would use the customer hash / UUID from the URL
-  // to load the actual Stripe customer ID from the database
-
   request
     .post({
-      url: `${rootUrl}pdf/${customerId}/${year}/${month}`,
+      url: `${rootUrl}${customerId}/${year}/${month}`,
       headers: {
         'Authorization': `Token ${accessKey}`,
         'Content-Type': 'application/json'

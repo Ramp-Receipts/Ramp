@@ -43,17 +43,17 @@ class Receipt extends Component {
 
     this.setState({
       year,
-      month
+      month,
+      pdfLink: ''
     });
 
-    Promise.all([
-      fetch(`/receipts/${year}/${month}`).then(res => res.json()),
-      fetch(`/receipts/pdf/${year}/${month}`).then(res => res.json())
-    ]).then(([receipt, pdf]) => this.setState({
-      loaded: true,
-      receipt,
-      pdfUrl: `${pdf.pdfUrl}&download=true`
-    }));
+    fetch(`/receipts/${year}/${month}`)
+      .then(res => res.json())
+      .then(receipt => this.setState({
+        loaded: true,
+        receipt,
+        pdfLink: receipt.pdfUrl
+      }));
   }
 
   render() {
@@ -140,7 +140,7 @@ class Receipt extends Component {
           </div>
           <div className="col-sm-6 app-toolbar">
             <Link to={'/'}>&laquo; back to list</Link>
-            <a href={this.state.pdfUrl} className="btn btn-primary" target="_blank">Download PDF</a>
+            <a href={this.state.pdfLink} className="btn btn-primary" target="_blank">Download PDF</a>
           </div>
         </div>
 
@@ -151,9 +151,9 @@ class Receipt extends Component {
             <strong>Customer:</strong>
           </div>
           <div className="col-sm-4">
-            {this.customer.name}<br />
-            {this.customer.address.line1}, {this.customer.address.line2}<br />
-            {this.customer.address.city} / {this.customer.address.zip}<br />
+            {this.customer.name}<br/>
+            {this.customer.address.line1}, {this.customer.address.line2}<br/>
+            {this.customer.address.city} / {this.customer.address.zip}<br/>
             {this.customer.address.country} ({this.customer.address.state})
           </div>
         </div>
@@ -169,12 +169,12 @@ class Receipt extends Component {
             <strong>Company:</strong>
           </div>
           <div className="col-sm-6">
-            {this.company.name}<br />
-            {this.company.address.line1}<br />
-            {this.company.address.line2}<br />
-            {this.company.address.city} {this.company.address.state}, {this.company.address.zip}<br />
-            VAT: {this.company.vat}<br />
-            Email: {this.company.email}<br />
+            {this.company.name}<br/>
+            {this.company.address.line1}<br/>
+            {this.company.address.line2}<br/>
+            {this.company.address.city} {this.company.address.state}, {this.company.address.zip}<br/>
+            VAT: {this.company.vat}<br/>
+            Email: {this.company.email}<br/>
             Phone: {this.company.phone}
           </div>
         </div>

@@ -1,4 +1,3 @@
-import download from 'downloadjs';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { formatCurrency, formatMonth } from './formatters';
@@ -51,7 +50,7 @@ class ReceiptsList extends Component {
               </td>
               <td className="text-right">
                 <a className="btn btn-default" title="Open PDF in browser" target="_blank"
-                  href={receipt.pdfUrl}>Open PDF</a>
+                  href={receipt.pdfUrl}>PDF</a>
               </td>
             </tr>)}
         </tbody>
