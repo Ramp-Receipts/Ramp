@@ -72,4 +72,20 @@ router.get('/:year/:month', (req, res, next) => {
     });
 });
 
+// Get the current customer data from the db
+router.get('/customer', (req, res, next) => {
+  // TODO: Do the actual loading from DB here
+  res.json(customerData);
+});
+
+// Save the current customer data to the DB
+router.post('/customer', (req, res, next) => {
+  let customer = req.body;
+
+  console.log('Saving customer: ', customer);
+  // TODO: Save the customer data to DB
+
+  res.status(200).json(customer);
+});
+
 module.exports = router;
