@@ -24,10 +24,11 @@ const customerData = {
 };
 
 // Gets the list of monthly receipts with links to PDFs
+// one page only with 60 months - so 5 years of receipts
 router.get('/', (req, res, next) => {
   request
     .post({
-      url: `${rootUrl}${customerId}`,
+      url: `${rootUrl}${customerId}?page-size=60`,
       headers: {
         'Authorization': `Token ${accessKey}`,
         'Content-Type': 'application/json'
